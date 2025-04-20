@@ -2,8 +2,7 @@
 import { AuthButton } from "@/components/AuthButton";
 import { FaXTwitter } from "react-icons/fa6";
 
-// 新規登録・ログイン
-export default function Home() {
+export default function TopPage() {
   return (
     <main className="min-h-screen bg-black text-white min-h-screen">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8 items-center min-h-screen">
