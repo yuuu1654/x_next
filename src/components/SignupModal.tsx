@@ -15,7 +15,7 @@ type Props = {
   onOpenChange: (open: boolean) => void;
 }
 
-export function SignupModal({ open, onOpenChange }: Props) {
+export const SignupModal = ({ open, onOpenChange }: Props) => {
   const router = useRouter();
 
   const handleClose = () => {
