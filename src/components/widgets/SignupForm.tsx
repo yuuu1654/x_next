@@ -24,13 +24,35 @@ import { z } from "zod";
 import { signup } from "@/actions/auth";
 
 const formSchema = z.object({
-  name: z.string(),
-  email: z.string().optional(),
-  password: z.string().optional(),
-  year: z.string().optional(),
-  month: z.string().optional(),
-  day: z.string().optional(),
+  // ▼以下だとnull, undefinedの場合のみエラーを出す
+  // name: z.string({
+  //   required_error: "Name is required",
+  // }),
+  name: z.string().min(1, {
+    message: "必須項目です"
+  }),
+  email: z.string().min(1, {
+    message: "必須項目です"
+  }).email({
+    message: "適切な形式のメールアドレスを入力してください"
+  }),
+  password: z.string().min(7, {
+    message: "パスワードは7文字以上で設定してください"
+  }).regex(/^[a-zA-Z0-9]{7,30}$/, {
+    message: "パスワードは7文字以上30文字以下の英数字で設定してください"
+  }),
+  year: z.string().min(1, {
+    message: "年を選択してください"
+  }),
+  month: z.string().min(1, {
+    message: "月を選択してください"
+  }),
+  day: z.string().min(1, {
+    message: "日を選択してください"
+  }),
 });
+
+
 
 export type FormSchema = z.infer<typeof formSchema>;
 
@@ -38,7 +60,7 @@ export const SignupForm = () => {
   const router = useRouter();
 
   const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema), //ここで、バリデーションを噛ませて、onSubmit実行前に検証している？
     defaultValues: {
       name: "",
       email: "",
