@@ -8,14 +8,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { SignupForm } from "./widgets/SignupForm";
+import { LoginForm } from "./widgets/LoginForm";
 
 type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export const SignupModal = ({ open, onOpenChange }: Props) => {
+export const LoginModal = ({ open, onOpenChange }: Props) => {
   const router = useRouter();
 
   const handleClose = () => {
@@ -36,10 +36,10 @@ export const SignupModal = ({ open, onOpenChange }: Props) => {
           </Button>
           <div className="mx-auto"></div>
           <DialogTitle className="text-xl font-bold text-center">
-            アカウントを作成
+            ログイン
           </DialogTitle>
         </DialogHeader>
-        <SignupForm />
+        <LoginForm />
       </DialogContent>
     </Dialog>
   );

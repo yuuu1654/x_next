@@ -28,7 +28,7 @@ export const AuthButton = () => {
         variant="outline"
         className="w-full bg-white hover:bg-gray-100 text-black font-bold rounded-full"
       >
-        ログイン
+        <Link href={"/auth/login"}>ログイン</Link>
       </Button>
 
       <div className="relative my-2">
