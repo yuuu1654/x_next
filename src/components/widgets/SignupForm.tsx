@@ -23,7 +23,7 @@ import {
 import { z } from "zod";
 import { signup } from "@/actions/auth";
 
-const formSchema = z.object({
+const signupFormSchema = z.object({
   // ▼以下だとnull, undefinedの場合のみエラーを出す
   // name: z.string({
   //   required_error: "Name is required",
@@ -54,13 +54,13 @@ const formSchema = z.object({
 
 
 
-export type FormSchema = z.infer<typeof formSchema>;
+export type SignupFormSchema = z.infer<typeof signupFormSchema>;
 
 export const SignupForm = () => {
   const router = useRouter();
 
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema), //ここで、バリデーションを噛ませて、onSubmit実行前に検証している？
+  const form = useForm<SignupFormSchema>({
+    resolver: zodResolver(signupFormSchema), //ここで、バリデーションを噛ませて、onSubmit実行前に検証している？
     defaultValues: {
       name: "",
       email: "",
@@ -71,7 +71,7 @@ export const SignupForm = () => {
     },
   });
 
-  const onSubmit = async (values: FormSchema) => {
+  const onSubmit = async (values: SignupFormSchema) => {
     try {
       const result = await signup(values); // signup()は、serverで実行される
       if (result.success) {
