@@ -17,11 +17,16 @@ import { z } from "zod";
 import { login } from "@/actions/auth";
 
 const loginFormSchema = z.object({
-  email: z.string().optional(),
-  password: z.string().optional(),
-  year: z.string().optional(),
-  month: z.string().optional(),
-  day: z.string().optional(),
+  email: z.string().min(1, {
+    message: "必須項目です"
+  }).email({
+    message: "適切な形式のメールアドレスを入力してください"
+  }),
+  password: z.string().min(1, {
+    message: "必須項目です"
+  }).regex(/^[0-9a-zA-Z]{7,30}$/, {
+    message: "パスワードは7文字以上30文字以下の英数字で設定してください"
+  })
 });
 
 export type LoginFormSchema = z.infer<typeof loginFormSchema>;
