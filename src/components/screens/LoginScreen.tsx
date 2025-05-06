@@ -1,19 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { LoginModal } from "../LoginModal"
 
 export const LoginScreen = () => {
-  const [isOpen, setIsOpen] = useState(false)
-
-  useEffect(() => {
-    setIsOpen(true)
-  }, [])
+  const [isOpen, setIsOpen] = useState(true)
 
   return (
-    <>
-      <LoginModal open={isOpen} onOpenChange={setIsOpen} />
-    </>
+    <LoginModal open={isOpen} onOpenChange={setIsOpen} />
   )
 }
 
