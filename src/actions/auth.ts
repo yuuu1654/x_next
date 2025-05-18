@@ -2,10 +2,11 @@
 
 import { LoginFormSchema } from "@/components/widgets/LoginForm";
 import { SignupFormSchema } from "@/components/widgets/SignupForm";
+import { API_BASE_URL } from "@/lib/constant";
 
 export async function signup(values: SignupFormSchema) {
   try {
-    const response = await fetch("http://localhost:3000/api/v1/users", {
+    const response = await fetch(`${API_BASE_URL}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +34,7 @@ export async function signup(values: SignupFormSchema) {
 
 export async function login(values: LoginFormSchema) {
   try {
-    const res = await fetch("http://localhost:3000/api/v1/users/sign_in", {
+    const res = await fetch(`${API_BASE_URL}/users/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
