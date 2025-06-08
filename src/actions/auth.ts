@@ -1,31 +1,25 @@
 "use server";
 
-import { FormSchema } from "@/components/widgets/SignupForm";
+import { LoginFormSchema } from "@/components/widgets/LoginForm";
+import { SignupFormSchema } from "@/components/widgets/SignupForm";
+import { apiFetch } from "@/lib/api";
 
-export async function signup(values: FormSchema) {
-  try {
-    const response = await fetch("http://localhost:3000/api/v1/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: values.name,
-        email: values.email,
-        password: values.password,
-        birthday: `${values.year}-${values.month}-${values.day}`,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
+export async function signup(values: SignupFormSchema) {
+  return apiFetch("/users", "POST", {
+    body: {
+      name: values.name,
+      email: values.email,
+      password: values.password,
+      birthday: `${values.year}-${values.month}-${values.day}`,
     }
+  })
+}
 
-    const data = await response.json();
-    console.log("Success create user in server:", data);
-    return { success: true, data };
-  } catch (error) {
-    console.error("Error occured when creating user:", error);
-    return { success: false, error: String(error) };
-  }
+export async function login(values: LoginFormSchema) {
+  return apiFetch("/users/sign_in", "POST", {
+    body: {
+      email: values.email,
+      password: values.password,
+    }
+  })
 }
