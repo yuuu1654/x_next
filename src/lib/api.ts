@@ -15,18 +15,29 @@ export async function apiFetch<T>(
    * シンプルなヘッダー設定に変更することで、400エラーが解決された
    */
   options?: {
-    body?: unknown;
+    body?: unknown | FormData;
     headers?: Record<string, string>;
   }
 ): Promise<ApiResponse<T>> {
   try {
+    const isFormData = options?.body instanceof FormData;
+
+    // FormDataの場合はContent-Typeを設定しない（ブラウザが自動設定）
+    const headers: Record<string, string> = isFormData
+      ? { ...options?.headers }
+      : {
+          "Content-Type": "application/json",
+          ...options?.headers,
+        };
+
     const res = await fetch(`${API_BASE_URL}${endpoint}`, {
       method: method,
-      headers: {
-        "Content-Type": "application/json",
-        ...options?.headers,
-      },
-      body: options?.body ? JSON.stringify(options.body) : undefined,
+      headers,
+      body: isFormData
+        ? (options.body as FormData)
+        : options?.body
+        ? JSON.stringify(options.body)
+        : undefined,
     });
     console.log("res", res);
 
